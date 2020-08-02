@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "rosesresurrected",
+  "version": "${version}",
+  "name": "Roses Resurrected",
+  "description": "A mod which reimplements roses after their tragic removal on September 5th, 2013",
+  "authors": [
+    "Lucas Dower"
+  ],
+  "contributors": [],
+  "contact": {
+    "sources": "https://github.com/LucasDower/Roses-Resurrected"
+  },
+  "license": "MIT",
+  "icon": "assets/rosesresurrected/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "rosesresurrected.RosesResurrected"
+    ],
+    "client": [],
+    "server": []
+  },
+  "mixins": [
+    "rosesresurrected.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.9.0",
+    "fabric": "*"
+  }
+}

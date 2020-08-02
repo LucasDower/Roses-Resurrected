@@ -28,17 +28,22 @@ public class RosesResurrected implements ModInitializer {
     public static final String MOD_NAME = "Roses Resurrected";
 
     private static final Block ROSE = new FlowerBlock(StatusEffects.WEAKNESS, 3, AbstractBlock.Settings.of(Material.PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.GRASS).nonOpaque());
-    private static final RandomPatchFeatureConfig EXAMPLE_FLOWER_CONFIG = (new net.minecraft.world.gen.feature.RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(ROSE.getDefaultState()), SimpleBlockPlacer.field_24871)).tries(64).build();
+    private static final Block POTTED_ROSE = new FlowerPotBlock(ROSE, AbstractBlock.Settings.of(Material.SUPPORTED).breakInstantly().nonOpaque());
+
+    private static final RandomPatchFeatureConfig BASIC_FLOWER_CONFIG = (new net.minecraft.world.gen.feature.RandomPatchFeatureConfig.Builder(new SimpleBlockStateProvider(ROSE.getDefaultState()), SimpleBlockPlacer.field_24871)).tries(64).build();
 
     @Override
     public void onInitialize() {
         Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "rose"), ROSE);
+        Registry.register(Registry.BLOCK, new Identifier(MOD_ID, "potted_rose"), POTTED_ROSE);
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "rose"), new BlockItem(ROSE, new Item.Settings().group(ItemGroup.DECORATIONS)));
+
         BlockRenderLayerMap.INSTANCE.putBlock(ROSE, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(POTTED_ROSE, RenderLayer.getCutout());
 
         Registry.BIOME.forEach(biome -> {
             if (biome.getCategory() == Biome.Category.FOREST || biome.getCategory() == Biome.Category.PLAINS) {
-                biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, net.minecraft.world.gen.feature.Feature.RANDOM_RANDOM_SELECTOR.configure(new RandomRandomFeatureConfig(ImmutableList.of(net.minecraft.world.gen.feature.Feature.FLOWER.configure(EXAMPLE_FLOWER_CONFIG)), 0)).createDecoratedFeature(Decorator.COUNT_HEIGHTMAP_32.configure(new CountDecoratorConfig(5))));
+                biome.addFeature(GenerationStep.Feature.VEGETAL_DECORATION, net.minecraft.world.gen.feature.Feature.RANDOM_RANDOM_SELECTOR.configure(new RandomRandomFeatureConfig(ImmutableList.of(net.minecraft.world.gen.feature.Feature.FLOWER.configure(BASIC_FLOWER_CONFIG)), 0)).createDecoratedFeature(Decorator.COUNT_HEIGHTMAP_32.configure(new CountDecoratorConfig(5))));
             }
         });
     }
